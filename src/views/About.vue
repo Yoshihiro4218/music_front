@@ -6,7 +6,7 @@
 
     <h1>Spring bootとVue.js練習用に作成します。
     </h1>
-    <img alt="My logo" src="../assets/business_card.jpg" width="40%" height="40%">
+  <!--  <img alt="My logo" src="../assets/business_card.jpg" width="40%" height="40%"> -->
   </div>
 </template>
 
