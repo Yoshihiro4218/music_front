@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
+    <head>
+    <meta charset="utf-8">
+    <title>MY MUSIC LIST</title>
+    </head>
       <!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> -->
     </div>

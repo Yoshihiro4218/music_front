@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["about"],{f820:function(t,e,n){"use strict";n.r(e);var a=function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",{staticClass:"about"},[n("div",{staticClass:"container"},[n("Header")],1),n("h1",[t._v("Spring bootとVue.js練習用に作成します。\n  ")])])},s=[],o=n("0418"),c={components:{Header:o["a"]}},i=c,r=n("2877"),u=Object(r["a"])(i,a,s,!1,null,null,null);e["default"]=u.exports}}]);
-//# sourceMappingURL=about.f95966d5.js.map
