@@ -36,6 +36,21 @@
 
       <div>
         <h1>Music List</h1>
+          <form method="post" action="/musics">
+            <p>　　　　　曲名：<input type="text" id="value1" name="music_name"></p>
+            <p>アーティスト名：<input type="text" id="value2" name="artist_name"></p>
+            <p>　　アルバム名：<input type="text" id="value3" name="album_name"></p>
+            <p><input type="submit" value="登録する"></p>
+          </form>
+
+          
+          <!-- <div>
+            <p>　　　　　曲名：<input type="text" id="value1" name="music_name"></p>
+            <p>アーティスト名：<input type="text" id="value2" name="artist_name"></p>
+            <p>　　アルバム名：<input type="text" id="value3" name="album_name"></p>
+            <input type="submit" value="登録する" onclick="createMusic();">
+          </div> -->
+
         <table>
           <thead>
             <tr>
@@ -138,35 +153,25 @@
     },
     mounted() {
       axios
-        .get('http://localhost:8080/music')
+        .get('/musics')
         .then((res) => {
           this.items = res.data
-          console.log(this.items);
+          // console.log(this.items);
         })
-        .catch(err => {
-          console.log(err)
-        })
+        // .catch(err => {
+        //   console.log(err)
+        // })
+    },
+     methods: {
+    createMusic: function (val1,val2,val3) { 
+      var JSONdata = {
+                    music_name: document.getElementById(val1),
+                    artist_name: ("#value2").value,
+                    album_name: ("#value3").value
+                };
+                console.log(JSONdata);
+      }
     }
-
-    // name: 'home',
-    // data: {
-    //   musiclist: ''
-    // },
-    // components: {
-    //   //    HelloWorld,
-    //   // Header,
-    //   Music
-    // },
-
-
-    // methods: {
-    //   listmap: function(){
-    //     axios.get("http://localhost:8080/music")
-    //     .then(function(response){
-    //     this.musiclist = response.data;
-    //     })        
-    //   }
-    // }
   }
 </script>
 

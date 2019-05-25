@@ -1,7 +1,7 @@
 module.exports = {
     devServer: {
       proxy: {
-        '/music': {
+        '/musics': {
           target: 'http://localhost:8080',
           ws: true,
           changeOrigin: true
