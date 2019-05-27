@@ -36,10 +36,10 @@
 
       <div>
         <h1>Music List</h1>
-          <form method="post" action="/musics">
-            <p>　　　　　曲名：<input type="text" id="value1" name="music_name"></p>
-            <p>アーティスト名：<input type="text" id="value2" name="artist_name"></p>
-            <p>　　アルバム名：<input type="text" id="value3" name="album_name"></p>
+          <form method="post" action="/musics" enctype="application/x-www-form-urlencoded" onsubmit="return redirect(/)">
+            <p>　　　　　曲名：<input type="text" id="musicName" name="musicName" required></p>
+            <p>アーティスト名：<input type="text" id="artistName" name="artistName" required></p>
+            <p>　　アルバム名：<input type="text" id="albumName" name="albumName" required></p>
             <p><input type="submit" value="登録する"></p>
           </form>
 
@@ -163,14 +163,14 @@
         // })
     },
      methods: {
-    createMusic: function (val1,val2,val3) { 
-      var JSONdata = {
-                    music_name: document.getElementById(val1),
-                    artist_name: ("#value2").value,
-                    album_name: ("#value3").value
-                };
-                console.log(JSONdata);
-      }
+    // createMusic: function (val1,val2,val3) { 
+    //   var JSONdata = {
+    //                 musicName: ("#value1").value,
+    //                 artistName: ("#value2").value,
+    //                 albumName: ("#value3").value
+    //             };
+    //             console.log(JSONdata);
+    //   }
     }
   }
 </script>
