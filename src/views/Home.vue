@@ -36,20 +36,12 @@
 
       <div>
         <h1>Music List</h1>
-          <form method="post" action="/musics" enctype="application/x-www-form-urlencoded" onsubmit="return redirect(/)">
+          <form name="createMusicForm">
             <p>　　　　　曲名：<input type="text" id="musicName" name="musicName" required></p>
             <p>アーティスト名：<input type="text" id="artistName" name="artistName" required></p>
             <p>　　アルバム名：<input type="text" id="albumName" name="albumName" required></p>
-            <p><input type="submit" value="登録する"></p>
+            <p><input type="button" value="登録する" v-on:click="createMusic()"></p>
           </form>
-
-          
-          <!-- <div>
-            <p>　　　　　曲名：<input type="text" id="value1" name="music_name"></p>
-            <p>アーティスト名：<input type="text" id="value2" name="artist_name"></p>
-            <p>　　アルバム名：<input type="text" id="value3" name="album_name"></p>
-            <input type="submit" value="登録する" onclick="createMusic();">
-          </div> -->
 
         <table>
           <thead>
@@ -57,25 +49,19 @@
               <th align="center">曲名</th>
               <th align="center">アーティスト名</th>
               <th align="center">アルバム名</th>
+              <th align="center">削除</th>
             </tr>
           </thead>
         <tbody>
           <tr class="musicList" v-for="item of items" v-bind:key="item">
             <td align="left">{{ item.music_name}}</td>
             <td align="left">{{ item.artist_name}}</td>
-            <td align="left">{{ item.album_name}}</td>            
+            <td align="left">{{ item.album_name}}</td>  
+            <button type="button" class="deleteBtn" v-on:click="deleteMusic(item.id)">削除</button>        
           </tr>
         </tbody>
         </table>
       </div>
-
-      <!-- <div id="app">
-        <ul>
-          <li v-for="user in users">
-            {{ user.name }}
-          </li>
-        </ul>
-      </div> -->
 
       <div class="contents">
         <h3 class="section-title">学べるレッスン</h3>
@@ -117,24 +103,6 @@
   </html>
 
 </template>
-<!--
-<template>
-  <div class="home">
-
-      <div class="container">
-        <Header></Header>
-      </div>
--->
-
-<!-- <HelloWorld msg="Welcome to Your Vue.js App"/>  -->
-<!-- 
-      <div class="container" id="musicList">
-        <Music></Music>
-      </div>
-  </div>
-
-</template>
--->
 
 
 <script>
@@ -156,21 +124,22 @@
         .get('/musics')
         .then((res) => {
           this.items = res.data
-          // console.log(this.items);
         })
-        // .catch(err => {
-        //   console.log(err)
-        // })
     },
      methods: {
-    // createMusic: function (val1,val2,val3) { 
-    //   var JSONdata = {
-    //                 musicName: ("#value1").value,
-    //                 artistName: ("#value2").value,
-    //                 albumName: ("#value3").value
-    //             };
-    //             console.log(JSONdata);
-    //   }
+       deleteMusic(musicId){
+        //  var music = document.getElementsByClassName("deleteBtn");
+        //  var musicId = 
+         console.log(musicId);
+       },
+       createMusic(){
+        var params = new URLSearchParams();
+        params.append('musicName', document.forms.createMusicForm.musicName.value);
+        params.append('artistName', document.forms.createMusicForm.artistName.value);
+        params.append('albumName', document.forms.createMusicForm.albumName.value);
+        axios.post('/musics', params);
+        location.reload();
+       }
     }
   }
 </script>
