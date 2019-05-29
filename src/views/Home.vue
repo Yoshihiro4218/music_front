@@ -128,9 +128,8 @@
     },
      methods: {
        deleteMusic(musicId){
-        //  var music = document.getElementsByClassName("deleteBtn");
-        //  var musicId = 
-         console.log(musicId);
+        axios.delete('/musics/' + musicId);
+        location.reload();
        },
        createMusic(){
         var params = new URLSearchParams();
