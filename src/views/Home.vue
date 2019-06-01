@@ -127,17 +127,17 @@
         })
     },
      methods: {
-       deleteMusic(musicId){
-        axios.delete('/musics/' + musicId);
-        location.reload();
+       deleteMusic(musicId){        
+        var deleteResult = new Promise(()=>{axios.delete('/musics/' + musicId)});
+        deleteResult.then(location.reload());
        },
        createMusic(){
         var params = new URLSearchParams();
         params.append('musicName', document.forms.createMusicForm.musicName.value);
         params.append('artistName', document.forms.createMusicForm.artistName.value);
         params.append('albumName', document.forms.createMusicForm.albumName.value);
-        axios.post('/musics', params);
-        location.reload();
+        var postResult = new Promise(()=>{axios.post('/musics', params)});
+        postResult.then(location.reload());
        }
     }
   }
