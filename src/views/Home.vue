@@ -33,9 +33,9 @@
 			<div>
 				<h1>Music List</h1>
 				<form name="createMusicForm">
-					<p>　　　　　曲名：<input type="text" id="musicName" name="musicName" required></p>
-					<p>アーティスト名：<input type="text" id="artistName" name="artistName" required></p>
-					<p>　　アルバム名：<input type="text" id="albumName" name="albumName" required></p>
+					<p>　　　　　曲名：<input type="text" class="createInput" id="musicName" name="musicName" required></p>
+					<p>アーティスト名：<input type="text" class="createInput" id="artistName" name="artistName" required></p>
+					<p>　　アルバム名：<input type="text" class="createInput" id="albumName" name="albumName" required></p>
 					<p><input type="button" class="createBtn" value="登録する" v-on:click="createMusic()"></p>
 				</form>
 
@@ -45,6 +45,7 @@
 							<th align="center">曲名</th>
 							<th align="center">アーティスト名</th>
 							<th align="center">アルバム名</th>
+							<th align="center">編集</th>
 							<th align="center">削除</th>
 						</tr>
 					</thead>
@@ -53,15 +54,20 @@
 							<td align="left">{{ item.music_name}}</td>
 							<td align="left">{{ item.artist_name}}</td>
 							<td align="left">{{ item.album_name}}</td>
-							<button type="button" class="deleteBtn" v-on:click="deleteMusic(item.id)">削除</button>
+							<td><button v-on:click="modalOpen(item.id)">編集</button></td>
+							<td><button v-on:click="deleteMusic(item.id)">削除</button></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<button @click="modalOpen()">更新モーダル（テスト）</button>
-			<UpdateModal v-if="modal" @close="modalClose">
+			<UpdateModal v-if="modal" @close="modalClose" @update="updateMusic">
 				<div id="title">
 					<h3 style="font-size:30px;">楽曲情報の更新</h3>
+					<body class="updateForm">
+						<p>　　　　　曲名：<input type="text" class="updateInput" v-model="musicNameUpdate" value="" required></p>
+						<p>アーティスト名：<input type="text" class="updateInput" v-model="artistNameUpdate" value="" required></p>
+						<p>　　アルバム名：<input type="text" class="updateInput" v-model="albumNameUpdate" value="" required></p>
+					</body>
 				</div>
 			</UpdateModal>
 
@@ -116,7 +122,10 @@
 		data() {
 			return {
 				items: [],
-				modal: false
+				modal: false,
+				musicNameUpdate: "",
+				artistNameUpdate: "",
+				albumNameUpdate: ""
 			}
 		},
 		components: {
@@ -140,12 +149,23 @@
 			deleteMusic(musicId) {
 				axios.delete('/musics/' + musicId).then(location.reload());
 			},
-			modalOpen() {
+			modalOpen(musicId) {
 				this.modal = true
+				this.musicNameUpdate = this.items[musicId-1].music_name
+				this.artistNameUpdate = this.items[musicId-1].artist_name
+				this.albumNameUpdate = this.items[musicId-1].album_name
+				console.log(this.items)
 			},
 			modalClose() {
      		this.modal = false
-    },
+			},
+			// updateMusic(){
+			// 	var params = new URLSearchParams();
+			// 	params.append('musicName', document.forms.createMusicForm.musicName.value);
+			// 	params.append('artistName', document.forms.createMusicForm.artistName.value);
+			// 	params.append('albumName', document.forms.createMusicForm.albumName.value);
+			// 	axios.post('/musics', params).then(location.reload());
+			// }
 		}
 	}
 </script>
@@ -273,7 +293,16 @@
 
 	.createBtn{
 		font-size: 30px;
-		margin: 10px 0px 30px 60px;
+		margin: 10px 0px 30px 100px;
 	}
+
+	.createInput,
+	.updateInput{
+		width: 250px;
+	}
+
+	/* .updateForm{
+		font-size: 20px;
+	} */
 	
 </style>

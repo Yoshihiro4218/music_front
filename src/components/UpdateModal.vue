@@ -7,6 +7,7 @@
         </div>
         <footer class="modal-footer">
           <slot name="footer">
+            <button class="updateBtn" @click="$emit('update')">更新</button>
             <button class="closeBtn" @click="$emit('close')">キャンセル</button>
           </slot>
         </footer>
@@ -45,8 +46,14 @@
   text-align: right;
 }
 
+.updateBtn{
+  font-size: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
 .closeBtn {
   font-size: 15px;
+  margin-left: 10px;
 }
 
 </style>
