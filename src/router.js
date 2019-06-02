@@ -15,11 +15,6 @@ export default new Router({
       component: Home
     },
     {
-      path: '/musics',
-      name: 'Done',
-      component: Done
-    },
-    {
       path: '/about',
       name: 'about',
 

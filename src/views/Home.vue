@@ -36,7 +36,7 @@
 					<p>　　　　　曲名：<input type="text" id="musicName" name="musicName" required></p>
 					<p>アーティスト名：<input type="text" id="artistName" name="artistName" required></p>
 					<p>　　アルバム名：<input type="text" id="albumName" name="albumName" required></p>
-					<p><input type="button" value="登録する" v-on:click="createMusic()"></p>
+					<p><input type="button" class="createBtn" value="登録する" v-on:click="createMusic()"></p>
 				</form>
 
 				<table>
@@ -58,6 +58,12 @@
 					</tbody>
 				</table>
 			</div>
+			<button @click="modalOpen()">更新モーダル（テスト）</button>
+			<UpdateModal v-if="modal" @close="modalClose">
+				<div id="title">
+					<h3 style="font-size:30px;">楽曲情報の更新</h3>
+				</div>
+			</UpdateModal>
 
 			<div class="contents">
 				<h3 class="section-title">学べるレッスン</h3>
@@ -74,8 +80,7 @@
 					<p>Ruby</p>
 				</div>
 				<div class="contents-item">
-					<img
-						src="https://s3-ap-northeast-1.amazonaws.com/progate/shared/images/lesson/html/study/swift.svg">
+					<img src="https://s3-ap-northeast-1.amazonaws.com/progate/shared/images/lesson/html/study/swift.svg">
 					<p>Swift</p>
 				</div>
 			</div>
@@ -104,13 +109,18 @@
 
 <script>
 	import axios from 'axios'
+	import UpdateModal from "../components/UpdateModal"
 
 	export default {
 		name: 'musicListGet',
 		data() {
 			return {
-				items: []
+				items: [],
+				modal: false
 			}
+		},
+		components: {
+			UpdateModal
 		},
 		mounted() {
 			axios
@@ -130,6 +140,12 @@
 			deleteMusic(musicId) {
 				axios.delete('/musics/' + musicId).then(location.reload());
 			},
+			modalOpen() {
+				this.modal = true
+			},
+			modalClose() {
+     		this.modal = false
+    },
 		}
 	}
 </script>
@@ -254,4 +270,10 @@
 	.footer-list li {
 		padding-bottom: 20px;
 	}
+
+	.createBtn{
+		font-size: 30px;
+		margin: 10px 0px 30px 60px;
+	}
+	
 </style>
