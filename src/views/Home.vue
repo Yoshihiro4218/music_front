@@ -122,6 +122,7 @@
 		data() {
 			return {
 				items: [],
+				musicDetail: [],
 				modal: false,
 				musicNameUpdate: "",
 				artistNameUpdate: "",
@@ -150,22 +151,28 @@
 				axios.delete('/musics/' + musicId).then(location.reload());
 			},
 			modalOpen(musicId) {
-				this.modal = true
-				this.musicNameUpdate = this.items[musicId-1].music_name
-				this.artistNameUpdate = this.items[musicId-1].artist_name
-				this.albumNameUpdate = this.items[musicId-1].album_name
-				console.log(this.items)
+				this.modal = true				
+				axios.get('/musics/' + musicId).then((res) => {
+					this.musicDetail = res.data[0]
+					this.musicNameUpdate = this.musicDetail.music_name
+					this.artistNameUpdate = this.musicDetail.artist_name
+					this.albumNameUpdate = this.musicDetail.album_name
+					})
 			},
 			modalClose() {
+				this.musicDetail.length = 0
+				this.musicNameUpdate = ""
+				this.artistNameUpdate = ""
+				this.albumNameUpdate = ""
      		this.modal = false
 			},
-			// updateMusic(){
-			// 	var params = new URLSearchParams();
-			// 	params.append('musicName', document.forms.createMusicForm.musicName.value);
-			// 	params.append('artistName', document.forms.createMusicForm.artistName.value);
-			// 	params.append('albumName', document.forms.createMusicForm.albumName.value);
-			// 	axios.post('/musics', params).then(location.reload());
-			// }
+			updateMusic(){
+				var params = new URLSearchParams();
+				params.append('musicName', this.musicNameUpdate);
+				params.append('artistName', this.artistNameUpdate);
+				params.append('albumName', this.albumNameUpdate);
+				axios.put('/musics/' + this.musicDetail.id, params).then(location.reload());
+			},
 		}
 	}
 </script>
