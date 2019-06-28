@@ -30,6 +30,8 @@
 				<h2>Java Spring Boot + Vue.jsの練習をします。</h2>
 			</div>
 
+			
+
 			<div>
 				<h1>Music List</h1>
 				<form name="createMusicForm">
@@ -63,10 +65,14 @@
 			<UpdateModal v-if="modal" @close="modalClose" @update="updateMusic">
 				<div id="title">
 					<h3 style="font-size:30px;">楽曲情報の更新</h3>
+					<div>
+					<button class='goodBtn' v-on:click="goodCountUp(nowMusicId)">いいね！:{{good}}回</button>
+					</div>
+
 					<body class="updateForm">
 						<p>　　　　　曲名：<input type="text" class="updateInput" v-model="musicNameUpdate" value="" required></p>
 						<p>アーティスト名：<input type="text" class="updateInput" v-model="artistNameUpdate" value="" required></p>
-						<p>　　アルバム名：<input type="text" class="updateInput" v-model="albumNameUpdate" value="" required></p>
+						<p>　　アルバム名：<input type="text" class="updateInput" v-model="albumNameUpdate" value="" required></p>									
 					</body>
 				</div>
 			</UpdateModal>
@@ -126,7 +132,9 @@
 				modal: false,
 				musicNameUpdate: "",
 				artistNameUpdate: "",
-				albumNameUpdate: ""
+				albumNameUpdate: "",
+				good: "",
+				nowMusicId: "",
 			}
 		},
 		components: {
@@ -157,6 +165,8 @@
 					this.musicNameUpdate = this.musicDetail.music_name
 					this.artistNameUpdate = this.musicDetail.artist_name
 					this.albumNameUpdate = this.musicDetail.album_name
+					this.good = this.musicDetail.good
+					this.nowMusicId = musicId 
 					})
 			},
 			modalClose() {
@@ -172,6 +182,11 @@
 				params.append('artistName', this.artistNameUpdate);
 				params.append('albumName', this.albumNameUpdate);
 				axios.put('/musics/' + this.musicDetail.id, params).then(location.reload());
+			},
+			goodCountUp(musicId){
+				axios.post('/musics/' + musicId + '/good').then((res)=>{
+					this.good = res.data;
+				})
 			},
 		}
 	}
